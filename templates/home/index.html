@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-
+{% load static %}
 <!-- Basic Page Needs
 ================================================== -->
 <title>Listeo</title>
@@ -9,8 +9,8 @@
 
 <!-- CSS
 ================================================== -->
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/main-color.css" id="colors">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/main-color.css' %}" id="colors">
 
 </head>
 
@@ -32,7 +32,7 @@
 				
 				<!-- Logo -->
 				<div id="logo">
-					<a href="index.html"><img src="images/logo2.png" data-sticky-logo="images/logo.png" alt=""></a>
+					<a href="index.html"><img src="{% static 'images/logo2.png' %}" data-sticky-logo="{% static 'images/logo.png' %}" alt=""></a>
 				</div>
 
 				<!-- Mobile Navigation -->
@@ -50,7 +50,7 @@
 
 						<li><a class="current" href="#">Home</a>
 							<ul>
-								<li><a href="index.html">Home 1</a></li>
+								<li><a href="/listings">Home 1</a></li>
 								<li><a href="index-2-airbnb.html">Home 2 (Airbnb)</a></li>
 								<li><a href="index-3.html">Home 3</a></li>
 								<li><a href="index-4.html">Home 4</a></li>
@@ -59,48 +59,7 @@
 							</ul>
 						</li>
 
-						<li><a href="#">Listings</a>
-							<ul>
-								<li><a href="#">List Layout</a>
-									<ul>
-										<li><a href="listings-list-with-sidebar.html">With Sidebar</a></li>
-										<li><a href="listings-list-full-width.html">Full Width</a></li>
-										<li><a href="listings-list-full-width-with-map.html">Full Width + Map</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Grid Layout</a>
-									<ul>
-										<li><a href="listings-grid-with-sidebar-1.html">With Sidebar 1</a></li>
-										<li><a href="listings-grid-with-sidebar-2.html">With Sidebar 2</a></li>
-										<li><a href="listings-grid-full-width.html">Full Width</a></li>
-										<li><a href="listings-grid-full-width-with-map.html">Full Width + Map</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Half Screen Map</a>
-									<ul>
-										<li><a href="listings-half-screen-map-list.html">List Layout</a></li>
-										<li><a href="listings-half-screen-map-grid-1.html">Grid Layout 1</a></li>
-										<li><a href="listings-half-screen-map-grid-2.html">Grid Layout 2</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Single Listings</a>
-									<ul>
-										<li><a href="listings-single-page.html">Single Listing 1</a></li>
-										<li><a href="listings-single-page-2.html">Single Listing 2</a></li>
-										<li><a href="listings-single-page-3.html">Single Listing 3</a></li>
-									</ul>
-								</li>
-								<li><a href="#">Open Street Map</a>
-									<ul>
-										<li><a href="listings-half-screen-map-list-OpenStreetMap.html">Half Screen Map List Layout</a></li>
-										<li><a href="listings-half-screen-map-grid-1-OpenStreetMap.html">Half Screen Map Grid Layout 1</a></li>
-										<li><a href="listings-half-screen-map-grid-2-OpenStreetMap.html">Half Screen Map Grid Layout 2</a></li>
-										<li><a href="listings-list-full-width-with-map-OpenStreetMap.html">Full Width List</a></li>
-										<li><a href="listings-grid-full-width-with-map-OpenStreetMap.html">Full Width Grid</a></li>
-										<li><a href="listings-single-page-OpenStreetMap.html">Single Listing</a></li>
-									</ul>
-								</li>
-							</ul>
+						<li><a href="/listings">Listings</a>
 						</li>
 
 						<li><a href="#">User Panel</a>
@@ -298,34 +257,35 @@
 						<span class="typed-words"></span>
 					</h2>
 					<h4>Expolore top-rated attractions, activities and more</h4>
+					<form action="/"  method="post">
+						{% csrf_token %}
+						<div class="main-search-input">
 
-					<div class="main-search-input">
-
-						<div class="main-search-input-item">
-							<input type="text" placeholder="What are you looking for?" value=""/>
-						</div>
-
-						<div class="main-search-input-item location">
-							<div id="autocomplete-container">
-								<input id="autocomplete-input" type="text" placeholder="Location">
+							<div class="main-search-input-item">
+								<input type="text" name="place" placeholder="What are you looking for?" value=""/>
 							</div>
-							<a href="#"><i class="fa fa-map-marker"></i></a>
+
+							<div class="main-search-input-item location">
+								<div id="autocomplete-container">
+									<input id="autocomplete-input" name="location" type="text" placeholder="Location">
+								</div>
+								<a href="#"><i class="fa fa-map-marker"></i></a>
+							</div>
+
+							<div class="main-search-input-item">
+								<select data-placeholder="All Categories" class="chosen-select" >
+									<option>All Categories</option>	
+									<option>Shops</option>
+									<option>Hotels</option>
+									<option>Restaurants</option>
+									<option>Fitness</option>
+									<option>Events</option>
+								</select>
+							</div>
+							<input type="submit" value="Search">
+							<!-- <button class="button">Search</button> -->
 						</div>
-
-						<div class="main-search-input-item">
-							<select data-placeholder="All Categories" class="chosen-select" >
-								<option>All Categories</option>	
-								<option>Shops</option>
-								<option>Hotels</option>
-								<option>Restaurants</option>
-								<option>Fitness</option>
-								<option>Events</option>
-							</select>
-						</div>
-
-						<button class="button" onclick="window.location.href='listings-half-screen-map-list.html'">Search</button>
-
-					</div>
+					</form>
 				</div>
 			</div>
 			
@@ -385,47 +345,13 @@
 			<div class="categories-boxes-container margin-top-5 margin-bottom-30">
 				
 				<!-- Box -->
-				<a href="listings-list-with-sidebar.html" class="category-small-box">
-					<i class="im im-icon-Hamburger"></i>
-					<h4>Eat & Drink</h4>
-					<span class="category-box-counter">12</span>
-				</a>
-
-				<!-- Box -->
-				<a href="listings-list-with-sidebar.html" class="category-small-box">
-					<i class="im  im-icon-Sleeping"></i>
-					<h4>Hotels</h4>
-					<span class="category-box-counter">32</span>
-				</a>
-
-				<!-- Box -->
-				<a href="listings-list-with-sidebar.html" class="category-small-box">
-					<i class="im im-icon-Shopping-Bag"></i>
-					<h4>Shops</h4>
-					<span class="category-box-counter">11</span>
-				</a>
-
-				<!-- Box -->
-				<a href="listings-list-with-sidebar.html" class="category-small-box">
-					<i class="im im-icon-Cocktail"></i>
-					<h4>Nightlife</h4>
-					<span class="category-box-counter">15</span>
-				</a>
-
-				<!-- Box -->
-				<a href="listings-list-with-sidebar.html" class="category-small-box">
-					<i class="im im-icon-Electric-Guitar"></i>
-					<h4>Events</h4>
-					<span class="category-box-counter">21</span>
-				</a>
-
-				<!-- Box -->
-				<a href="listings-list-with-sidebar.html" class="category-small-box">
-					<i class="im im-icon-Dumbbell"></i>
-					<h4>Fitness</h4>
-					<span class="category-box-counter">28</span>
-				</a>
-
+				{% for cat in pop_cats %}
+					<a href="listings-list-with-sidebar.html" class="category-small-box">
+						<i class="{{ cat.icon_class }}"></i>
+						<h4>{{ cat.category_name }}</h4>
+						<span class="category-box-counter">{{ cat.get_places_count }}</span>
+					</a>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
@@ -450,139 +376,29 @@
 
 			<div class="col-md-12">
 				<div class="simple-slick-carousel dots-nav">
+				{% for place in places %}
+					<!-- Listing Item -->
+					<div class="carousel-item">
+						<a href="listings-single-page.html" class="listing-item-container">
+							<div class="listing-item">
+								<img src="{{place.image.url}}" alt="">
 
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="images/listing-item-01.jpg" alt="">
-
-							<div class="listing-badge now-open">Now Open</div>
-							
-							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Tom's Restaurant <i class="verified-icon"></i></h3>
-								<span>964 School Street, New York</span>
+								<div class="listing-badge now-open">{{place.description}}</div>
+								
+								<div class="listing-item-content">
+									<span class="tag">{{place.category.category_name}}</span>
+									<h3>{{place.name}} <i class="verified-icon"></i></h3>
+									<span>{{place.address}}</span>
+								</div>
+								<span class="like-icon"></span>
 							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="3.5">
-							<div class="rating-counter">(12 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="images/listing-item-02.jpg" alt="">
-							<div class="listing-item-details">
-								<ul>
-									<li>Friday, August 10</li>
-								</ul>
+							<div class="star-rating" data-rating="{{place.ratings}}">
+								<div class="rating-counter">({{place.get_review_count}} reviews)</div>
 							</div>
-							<div class="listing-item-content">
-								<span class="tag">Events</span>
-								<h3>Sticky Band</h3>
-								<span>Bishop Avenue, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="5.0">
-							<div class="rating-counter">(23 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->		
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="images/listing-item-03.jpg" alt="">
-							<div class="listing-item-details">
-								<ul>
-									<li>Starting from $59 per night</li>
-								</ul>
-							</div>
-							<div class="listing-item-content">
-								<span class="tag">Hotels</span>
-								<h3>Hotel Govendor</h3>
-								<span>778 Country Street, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="2.0">
-							<div class="rating-counter">(17 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="images/listing-item-04.jpg" alt="">
-
-							<div class="listing-badge now-open">Now Open</div>
-
-							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Burger House <i class="verified-icon"></i></h3>
-								<span>2726 Shinn Street, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="5.0">
-							<div class="rating-counter">(31 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="images/listing-item-05.jpg" alt="">
-							<div class="listing-item-content">
-								<span class="tag">Other</span>
-								<h3>Airport</h3>
-								<span>1512 Duncan Avenue, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="3.5">
-							<div class="rating-counter">(46 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="carousel-item">
-					<a href="listings-single-page.html" class="listing-item-container">
-						<div class="listing-item">
-							<img src="images/listing-item-06.jpg" alt="">
-
-							<div class="listing-badge now-closed">Now Closed</div>
-
-							<div class="listing-item-content">
-								<span class="tag">Eat & Drink</span>
-								<h3>Think Coffee</h3>
-								<span>215 Terry Lane, New York</span>
-							</div>
-							<span class="like-icon"></span>
-						</div>
-						<div class="star-rating" data-rating="4.5">
-							<div class="rating-counter">(15 reviews)</div>
-						</div>
-					</a>
-				</div>
-				<!-- Listing Item / End -->
+						</a>
+					</div>
+					<!-- Listing Item / End -->
+				{% endfor %}
 				</div>
 				
 			</div>
@@ -854,18 +670,18 @@
 
 <!-- Scripts
 ================================================== -->
-<script type="text/javascript" src="scripts/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="scripts/jquery-migrate-3.1.0.min.js"></script>
-<script type="text/javascript" src="scripts/mmenu.min.js"></script>
-<script type="text/javascript" src="scripts/chosen.min.js"></script>
-<script type="text/javascript" src="scripts/slick.min.js"></script>
-<script type="text/javascript" src="scripts/rangeslider.min.js"></script>
-<script type="text/javascript" src="scripts/magnific-popup.min.js"></script>
-<script type="text/javascript" src="scripts/waypoints.min.js"></script>
-<script type="text/javascript" src="scripts/counterup.min.js"></script>
-<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
-<script type="text/javascript" src="scripts/tooltips.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js"></script>
+<script type="text/javascript" src="{% static 'scripts/jquery-3.4.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/jquery-migrate-3.1.0.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/mmenu.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/chosen.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/slick.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/rangeslider.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/magnific-popup.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/waypoints.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/counterup.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/jquery-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/tooltips.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/custom.js' %}"></script>
 
 
 <!-- Leaflet // Docs: https://leafletjs.com/ -->
